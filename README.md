@@ -14,7 +14,8 @@ This plugin enables OpenClaw to connect to any MCP (Model Context Protocol) serv
 ✅ **Dynamic Tool Discovery** - Automatically discovers and registers tools from MCP servers  
 ✅ **Multi-Server Support** - Connect to multiple MCP servers simultaneously  
 ✅ **Unified Interface** - All MCP tools accessible through a single `mcp` tool  
-✅ **Error Handling** - Robust error handling and logging  
+✅ **Custom Headers / Auth** - Support Bearer token and custom HTTP headers for authenticated MCP servers
+✅ **Error Handling** - Robust error handling and logging
 
 ## 📋 Prerequisites
 
@@ -74,7 +75,10 @@ Add to `~/.openclaw/openclaw.json`:
             "example-server": {
               "enabled": true,
               "transport": "http",
-              "url": "http://localhost:3000/mcp"
+              "url": "http://localhost:3000/mcp",
+              "headers": {
+                "Authorization": "Bearer YOUR_API_KEY"
+              }
             }
           }
         }
@@ -94,6 +98,7 @@ Add to `~/.openclaw/openclaw.json`:
       enabled: boolean;          // Enable/disable this server (default: true)
       transport: "http";         // Transport type (currently only http supported)
       url: string;               // Server URL (e.g., "http://localhost:3000/mcp")
+      headers?: Record<string, string>;  // Custom HTTP headers (e.g., Authorization)
     }
   }
 }

@@ -8,6 +8,7 @@ export class StreamableHTTPClientTransport {
   constructor(url, options = {}) {
     this._url = url instanceof URL ? url : new URL(url);
     this._sessionId = options.sessionId || null;
+    this._customHeaders = options.headers || {};
     this._abortController = null;
     this._sseAbortController = null;
     this._debug = options.debug || false;
@@ -33,6 +34,7 @@ export class StreamableHTTPClientTransport {
       method: 'GET',
       headers: {
         'Accept': 'text/event-stream',
+        ...this._customHeaders,
         ...(this._sessionId && { 'mcp-session-id': this._sessionId })
       },
       signal: this._sseAbortController.signal
@@ -140,6 +142,7 @@ export class StreamableHTTPClientTransport {
       const headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json, text/event-stream',
+        ...this._customHeaders,
       };
 
       if (this._sessionId) {
